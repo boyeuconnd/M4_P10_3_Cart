@@ -16,7 +16,6 @@ public class Product {
     @Column(columnDefinition = "integer default 0")
     private Integer price;
 
-    @ColumnDefault("https://thegioihoahong.com/wp-content/uploads/2018/06/gio-hoa-tuoi-tinh-yeu-to-bu.jpg")
     private String img;
 
     public Long getId() {
