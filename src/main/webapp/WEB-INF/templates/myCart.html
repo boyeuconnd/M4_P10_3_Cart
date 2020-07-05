@@ -5,7 +5,7 @@
     <title>My Cart</title>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -70,7 +70,7 @@
                 <div class="panel-footer">
                     <div class="row text-center">
                         <div class="col-xs-9">
-                            <h4 class="text-right">Total <strong id="total"></strong></h4>
+                            <h4 class="text-right">Total <strong id="total" th:text="${totalPrice}+' VND'"></strong></h4>
                         </div>
                         <div class="col-xs-3">
                             <button type="button" class="btn btn-success btn-block">
@@ -84,14 +84,5 @@
     </div>
 </div>
 
-<!--    <script>-->
-<!--        function showtotal(){-->
-<!--            let price = document.getElementsByClassName("price");-->
-<!--            console.log(price)-->
-<!--            let amount = document.getElementsByClassName("amount").value;-->
-<!--            console.log(amount)-->
-<!--            document.getElementById("total").innerHTML = price * amount;-->
-<!--        }-->
-<!--    </script>-->
 </body>
 </html>
