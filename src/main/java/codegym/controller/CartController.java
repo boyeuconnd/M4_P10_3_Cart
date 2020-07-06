@@ -30,6 +30,17 @@ public class CartController {
         return new HashMap<>();
     }
 
+    @GetMapping("/cart")
+    public ModelAndView showCart(@ModelAttribute("cart")HashMap<Long,Cart> cart){
+        if(cart==null){
+            cart=new HashMap<>();
+        }
+
+        ModelAndView mv = new ModelAndView("myCart");
+        mv.addObject("totalPrice",this.totalPrice(cart));
+        return mv;
+    }
+
 
 
 
