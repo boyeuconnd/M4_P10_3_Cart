@@ -1,7 +1,7 @@
 package codegym.controller;
 
 
-import codegym.repository.ProductReposioty;
+import codegym.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
     @Autowired
-    private ProductReposioty productReposioty;
+    private ProductRepository productRepository;
 
     @GetMapping(value = "")
     public String getIndex(){
@@ -23,14 +23,14 @@ public class HomeController {
 
     @ModelAttribute
     public void productList(Model model){
-        model.addAttribute("products",productReposioty.findAll());
+        model.addAttribute("products", productRepository.findAll());
 
     }
 
     @GetMapping("product/{id}")
     public ModelAndView getDetail(@PathVariable Long id){
         ModelAndView mv = new ModelAndView("productDetail");
-        mv.addObject("product",productReposioty.findOne(id));
+        mv.addObject("product", productRepository.findOne(id));
         return mv;
     }
 }

@@ -3,7 +3,7 @@ package codegym.controller;
 
 import codegym.model.Cart;
 import codegym.model.Product;
-import codegym.repository.ProductReposioty;
+import codegym.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,8 +21,7 @@ import java.util.Map;
 public class CartController {
 
     @Autowired
-    private ProductReposioty productReposioty;
-
+    ProductService productService;
 
     @ModelAttribute("cart")
     public HashMap<Long,Cart> myCart(){
@@ -42,14 +40,25 @@ public class CartController {
     }
 
 
-
-
     @GetMapping("/addcart/{id}")
     public ModelAndView addCart(@ModelAttribute("cart")HashMap<Long,Cart> cart, @PathVariable Long id){
+        cart = ensureCartNotNull(cart, id);
+        insertProductToCart(cart, id);
+        ModelAndView mv = new ModelAndView("myCart");
+        mv.addObject("totalPrice",this.totalPrice(cart));
+
+        return mv;
+    }
+
+    private HashMap<Long, Cart> ensureCartNotNull(HashMap<Long, Cart> cart, Long id) {
         if(cart==null){
             cart= new HashMap<>();
         }
-        Product pickProduct = productReposioty.findOne(id);
+        return cart;
+    }
+
+    public void insertProductToCart(HashMap<Long, Cart> cart, Long id) {
+        Product pickProduct = productService.findOne(id);
         if(pickProduct!=null){
             if(cart.containsKey(id)){
                 Cart item = cart.get(id);
@@ -63,10 +72,6 @@ public class CartController {
                 cart.put(id,item);
             }
         }
-        ModelAndView mv = new ModelAndView("myCart");
-        mv.addObject("totalPrice",this.totalPrice(cart));
-
-        return mv;
     }
 
     @GetMapping("/deletecart/{id}")
@@ -89,8 +94,5 @@ public class CartController {
         }
         return total;
     }
-
-
-
 
 }

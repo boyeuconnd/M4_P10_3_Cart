@@ -1,5 +1,7 @@
 package codegym;
 
+import codegym.services.ProductService;
+import codegym.services.ProductServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.InitializingBean;
@@ -109,6 +111,11 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         return properties;
+    }
+
+    @Bean
+    public ProductService productService() {
+        return new ProductServiceImpl();
     }
 
 }
